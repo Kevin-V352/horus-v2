@@ -72,3 +72,13 @@ export const getDayNames = (timestamp: number): string => {
 };
 
 export const capitalize = (string: string): string => string[0].toUpperCase() + string.slice(1);
+
+export const getTempPercentage = (tempMin: number, tempMax: number, temp: number): number => {
+
+  if (tempMin > tempMax) [tempMin, tempMax] = [tempMax, tempMin];
+
+  const percentageRemaining = (((tempMax - temp) / (tempMax - tempMin)) * 100);
+
+  return Math.min(100, Math.max(0, percentageRemaining));
+
+};
