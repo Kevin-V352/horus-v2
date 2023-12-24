@@ -1,5 +1,6 @@
 export { default as BrightnessHighFill } from './BrightnessHighFill';
 export { default as Calendar } from './Calendar';
+export { default as CaretDownFill } from './CaretDownFill';
 export { default as CloudDrizzleFill } from './CloudDrizzleFill';
 export { default as CloudFill } from './CloudFill';
 export { default as CloudFogFill } from './CloudFogFill';
