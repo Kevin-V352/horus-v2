@@ -38,12 +38,13 @@ export interface Properties {
 }
 
 export interface MinGeocodingResponse {
-  locationName: string;
+  id: string;
   lat: number;
   lon: number;
+  locationName: string;
 }
 
-export interface MinGeocodingClientResponse extends Omit<MinGeocodingResponse, 'locationName'> {
+export interface MinGeocodingClientResponse extends Omit<MinGeocodingResponse, 'locationName' | 'id'> {
   label: string;
   tempId: number;
   type: MinGeocodingResponseType;
