@@ -24,7 +24,9 @@
       "@/icons": ["./src/components/icons/index"],
       "@/layouts": ["./src/components/layouts/index"],
       "@/pages": ["./src/components/pages/index"],
-      "@/ui": ["./src/components/ui/index"]
+      "@/ui": ["./src/components/ui/index"],
+      "@/clientServices": ["./src/services/client"],
+      "@/serverServices": ["./src/services/server"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
