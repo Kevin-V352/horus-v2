@@ -1,7 +1,9 @@
 import { type FC } from 'react';
 
-import { HomePage } from '@/pages';
+const Home: FC = () => {
 
-const Home: FC = () => <HomePage/>;
+  return <p>home</p>;
+
+};
 
 export default Home;

@@ -1,30 +1,26 @@
 import { type FC } from 'react';
 
-import { Card } from '@/ui';
+import { Calendar } from '@/icons';
+import { Card, ForecastCard } from '@/ui';
 
-const HomePage: FC = () => {
+import type * as T from './types';
+
+const HomePage: FC<T.HomePageProps> = ({ weather }) => {
 
   return (
     <main className="bg-blue-900 grid grid-cols-2">
       <div className="min-h-screen p-8">
 
       </div>
-      <div className="bg-emerald-500 min-h-screen p-8 grid gap-2.5 grid-cols-3 auto-rows-min">
+      <div className="bg-black_transparent_03 min-h-screen p-8 grid gap-2.5 grid-cols-3 auto-rows-min">
         <div className='col-start-1 col-end-4'>
-          <Card
-            headIcon={<div>pepe</div>}
-            title="pepe-title"
-          >
-            <div>
-              hola
-            </div>
-          </Card>
+          <ForecastCard data={weather?.daily} />
         </div>
         {
           Array(6).fill(1).map((_value, key) => (
             <Card
               key={key}
-              headIcon={<div>pepe</div>}
+              headIcon={<Calendar />}
               title="pepe-title"
             >
               <div>
@@ -35,7 +31,7 @@ const HomePage: FC = () => {
         }
         <div className='col-start-1 col-end-4'>
           <Card
-            headIcon={<div>pepe</div>}
+            headIcon={<Calendar />}
             title="pepe-title"
           >
             <div>
