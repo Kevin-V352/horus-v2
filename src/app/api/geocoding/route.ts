@@ -34,13 +34,14 @@ export const GET = async (req: NextRequest): Promise<Response> => {
     const formattedData: MinGeocodingResponse[] = data.features.map((location) => {
 
       // eslint-disable-next-line @typescript-eslint/naming-convention
-      const { place_name, center } = location;
+      const { id, place_name, center } = location;
       const [lon, lat] = center;
 
       return {
-        locationName: place_name,
+        id,
         lat,
-        lon
+        lon,
+        locationName: place_name
       };
 
     });
