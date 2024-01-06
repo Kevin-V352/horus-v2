@@ -1,6 +1,11 @@
 export { default as Accordion } from './Accordion';
-export { default as LocationAutocomplete } from './LocationAutocomplete';
+export { default as BackgroundImage } from './BackgroundImage';
 export { default as Card } from './Card';
+export { default as ForecastBar } from './ForecastBar';
 export { default as ForecastCard } from './ForecastCard';
+export { default as GenericCard } from './GenericCard';
+export { default as LocationAutocomplete } from './LocationAutocomplete';
+export { default as MapCard } from './MapCard';
+export { default as MapMaker } from './MapMaker';
 export { default as ProgressBar } from './ProgressBar';
 export { default as WeatherIcon } from './WeatherIcon';
