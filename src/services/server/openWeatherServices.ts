@@ -48,7 +48,7 @@ export const getCurrentWeatherByCoordinates = async (lat: string, lon: string): 
 
     const formattedData: MinWeatherResponse = {
       current: {
-        description:   current.weather[0].description,
+        description:   formatters.capitalize(current.weather[0].description),
         dewPoint:      current.dew_point,
         humidity:      current.humidity,
         iconId:        current.weather[0].icon,
