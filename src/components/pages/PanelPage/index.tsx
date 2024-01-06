@@ -1,0 +1,101 @@
+import { type FC } from 'react';
+
+import { type GenericCardProps } from '@/components/ui/GenericCard/types';
+import { BrightnessHighFill, DropletFill, Speedometer, SunsetFill, ThermometerHalf, UmbrellaFill } from '@/icons';
+import { type WeatherIconId, type MinWeatherResponse } from '@/interfaces';
+import { BackgroundImage, ForecastBar, ForecastCard, GenericCard, MapCard, WeatherIcon } from '@/ui';
+
+import type * as T from './types';
+
+const PanelPage: FC<T.PanelPageProps> = ({ lat, lon, weather }) => {
+
+  const getCardsInfo = (weather: MinWeatherResponse): GenericCardProps[] => {
+
+    const commonHeadIconProps = {
+      size: 16
+    };
+
+    return [
+      {
+        headIcon:    <BrightnessHighFill {...commonHeadIconProps} />,
+        title:       'UV index',
+        mainData:    String(weather.current.uvi),
+        description: '1'
+      },
+      {
+        headIcon:    <SunsetFill {...commonHeadIconProps} />,
+        title:       'Sunset',
+        mainData:    String(weather.current.sunset),
+        description: `Amanecer: ${weather.current.sunrise}`
+      },
+      {
+        headIcon:    <UmbrellaFill {...commonHeadIconProps} />,
+        title:       'Precipitation',
+        mainData:    `${weather.current.precipitation}mm`,
+        description: 'Predicción de la última hora'
+      },
+      {
+        headIcon:    <ThermometerHalf {...commonHeadIconProps} />,
+        title:       'Temperature',
+        mainData:    `${weather.current.temp}°C`,
+        description: 'Se siente mas fresco con el viento'
+      },
+      {
+        headIcon:    <DropletFill {...commonHeadIconProps} />,
+        title:       'Humidity',
+        mainData:    `${weather.current.humidity}%`,
+        description: `El punto de rocío ahora es ${weather.current.dewPoint}°`
+      },
+      {
+        headIcon:    <Speedometer {...commonHeadIconProps} />,
+        title:       'Pressure',
+        mainData:    String(weather.current.pressure),
+        description: 'XD'
+      }
+    ];
+
+  };
+
+  return (
+    <BackgroundImage backgroundId={weather.current.iconId as WeatherIconId}>
+      <div className="grid grid-cols-2">
+        <div className="min-h-screen p-8">
+          <div className="flex flex-col text-white gap-8 justify-end h-full">
+            <h1 className="text-7xl font-bold">{`${weather.current.temp}°C`}</h1>
+            <h3 className="text-3xl font-bold">Montevideo, Uruguay</h3>
+            <div className="flex gap-4">
+              <WeatherIcon
+                iconId={weather.current.iconId as WeatherIconId}
+                size={32}
+              />
+              <span className="text-xl">{weather.current.description}</span>
+            </div>
+            <ForecastBar data={weather.hourly} />
+          </div>
+        </div>
+        <div className="bg-black_transparent_03 min-h-screen p-8 grid gap-2.5 grid-cols-3 auto-rows-min h-screen overflow-y-scroll">
+          <div className='col-start-1 col-end-4'>
+            <ForecastCard data={weather?.daily} />
+          </div>
+          {
+            getCardsInfo(weather).map((value, key) => (
+              <GenericCard
+                key={key}
+                {...value}
+              />
+            ))
+          }
+          <div className='col-start-1 col-end-4'>
+            <MapCard
+              lat={lat}
+              lon={lon}
+            />
+          </div>
+        </div>
+      </div>
+    </BackgroundImage>
+  );
+
+};
+
+export default PanelPage;

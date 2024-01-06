@@ -1,5 +1,7 @@
 import { type MinWeatherResponse } from '@/interfaces';
 
-export interface HomePageProps {
+export interface PanelPageProps {
+  lat: number;
+  lon: number;
   weather: MinWeatherResponse;
 }
