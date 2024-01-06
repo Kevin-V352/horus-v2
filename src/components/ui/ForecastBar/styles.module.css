@@ -1,0 +1,16 @@
+.simpleBarTrack {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  height: 5px;
+  margin-inline: auto;
+  width: 25%;
+}
+
+.simpleBarScrollbar {
+  background-color: #FFF;
+  border-radius: 10px;
+  cursor: ew-resize;
+  height: 5px;
+  width: 20px;
+  margin-top: 20px;
+}
