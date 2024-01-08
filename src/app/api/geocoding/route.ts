@@ -1,7 +1,7 @@
 import { type NextRequest } from 'next/server';
 
-import { mapboxAPI } from '@/config';
-import { type MinGeocodingResponse, type MapboxGeocodingV5Response } from '@/interfaces';
+import { type MinGeocodingResponse } from '@/interfaces';
+import { mapboxServices } from '@/serverServices';
 
 export const GET = async (req: NextRequest): Promise<Response> => {
 
@@ -18,44 +18,32 @@ export const GET = async (req: NextRequest): Promise<Response> => {
 
   };
 
-  const paramsToSend = {
-    proximity: 'ip',
-    types:     'country,region,locality,place'
-  };
+  const [locationDetails] = await mapboxServices.getDetailsByLocationId(location);
 
-  const endpoint = `/geocoding/v5/mapbox.places/${location}.json`;
+  if (!locationDetails) {
 
-  try {
-
-    const { data } = await mapboxAPI.get<MapboxGeocodingV5Response>(endpoint, {
-      params: paramsToSend
-    });
-
-    const formattedData: MinGeocodingResponse[] = data.features.map((location) => {
-
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      const { id, place_name, center } = location;
-      const [lon, lat] = center;
-
-      return {
-        id,
-        lat,
-        lon,
-        locationName: place_name
-      };
-
-    });
-
-    return new Response(JSON.stringify(formattedData), { status: 200 });
-
-  } catch (error) {
-
-    console.error(error);
     return new Response(JSON.stringify({
       error:   'Internal error',
       message: 'An unexpected error has occurred'
     }), { status: 500 });
 
   };
+
+  const formattedData: MinGeocodingResponse[] = locationDetails.features.map((location) => {
+
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const { id, place_name, center } = location;
+    const [lon, lat] = center;
+
+    return {
+      id,
+      lat,
+      lon,
+      locationName: place_name
+    };
+
+  });
+
+  return new Response(JSON.stringify(formattedData), { status: 200 });
 
 };
