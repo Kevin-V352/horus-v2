@@ -18,8 +18,8 @@ export interface OpenWeatherAPI25OneCallResponse {
 
 export interface Current {
   dt:         number;
-  sunrise?:   number;
-  sunset?:    number;
+  sunrise:    number;
+  sunset:     number;
   temp:       number;
   feels_like: number;
   pressure:   number;
@@ -121,12 +121,13 @@ export interface MinWeatherResponse {
     dewPoint:       number;
     humidity:       number;
     iconId:         string;
-    precipitation?: number;
+    precipitation:  number;
     pressure:       number;
-    sunrise:        string | null;
-    sunset:         string | null;
+    sunrise:        string;
+    sunset:         string;
     temp:           number;
     uvi:            number;
+    nextEvent:      'sunrise' | 'sunset';
   };
   hourly: MinHourlyWeater[];
   daily: MinDailyWeater[];
