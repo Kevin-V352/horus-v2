@@ -9,3 +9,4 @@ export { default as MapCard } from './MapCard';
 export { default as MapMaker } from './MapMaker';
 export { default as ProgressBar } from './ProgressBar';
 export { default as WeatherIcon } from './WeatherIcon';
+export { default as UVIndexCard } from './UVIndexCard';

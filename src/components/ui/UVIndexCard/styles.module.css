@@ -1,0 +1,17 @@
+.uvIndexBar {
+  height: 5px;
+  width: 100%;
+  background: linear-gradient(90deg, rgba(146,229,189,1) 0%, rgba(125,132,229,1) 33%, rgba(223,99,110,1) 66%, rgba(241,238,51,1) 100%);
+  border-radius: 12px;
+  position: relative;
+}
+
+.uvIndexBarSelector {
+  content: '';
+  height: 24px;
+  width: 24px;
+  background: white;
+  position: absolute;
+  border-radius: 100%;
+  border: solid 4px orange
+}
