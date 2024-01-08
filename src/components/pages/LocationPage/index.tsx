@@ -5,13 +5,14 @@ import { useEffect, type FC, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { type SingleValue } from 'react-select';
 
+import { locationServices } from '@/clientServices';
 import { type MinGeocodingClientResponse } from '@/interfaces';
 import { LocationAutocomplete } from '@/ui';
 import { locationTools } from '@/utils';
 
 const LocationPage: FC = () => {
 
-  const [currentUserLocation, setCurrentUserLocation] = useState<GeolocationCoordinates | null>(null);
+  const [currentLocationId, setCurrentLocationId] = useState<string | null>(null);
 
   useEffect(() => {
 
@@ -24,13 +25,20 @@ const LocationPage: FC = () => {
   const retrieveUserLocation = async (): Promise<void> => {
 
     const [userLocation] = await locationTools.getUserLocation();
-    if (userLocation) setCurrentUserLocation(userLocation);
+
+    if (!userLocation) return;
+
+    const { latitude, longitude } = userLocation;
+
+    const [locationId] = await locationServices.getLocationIdByCoordinates(latitude, longitude);
+
+    if (locationId) setCurrentLocationId(locationId);
 
   };
 
-  const redirectToPanel = (lat: number, lon: number): void => {
+  const redirectToPanel = (locationId: string): void => {
 
-    router.push(`/panel?lat=${lat}&lon=${lon}`);
+    router.push(`/panel?locationId=${locationId}`);
 
   };
 
@@ -38,20 +46,16 @@ const LocationPage: FC = () => {
 
     if (!newValue) return;
 
-    const { lat, lon } = newValue;
+    const { value: locationId } = newValue;
 
     locationTools.saveLocationInLocalHistory(newValue);
-    redirectToPanel(lat, lon);
+    redirectToPanel(locationId);
 
   };
 
   const onCurrentUserLocation = (): void => {
 
-    if (!currentUserLocation) return;
-
-    const { latitude, longitude } = currentUserLocation;
-
-    redirectToPanel(latitude, longitude);
+    if (currentLocationId) redirectToPanel(currentLocationId);
 
   };
 
@@ -60,7 +64,7 @@ const LocationPage: FC = () => {
       <LocationAutocomplete onChange={onLocationChange}/>
       <button
         onClick={onCurrentUserLocation}
-        disabled={!currentUserLocation}
+        disabled={!currentLocationId}
       >
         Usar ubicacion actual
       </button>
