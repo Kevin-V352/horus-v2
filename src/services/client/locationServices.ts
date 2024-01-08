@@ -1,5 +1,9 @@
 import { horusAPI } from '@/config';
-import { type MinGeocodingClientResponse, type MinGeocodingResponse, MinGeocodingResponseType } from '@/interfaces';
+import { type MinGeocodingClientResponse, MinGeocodingResponseType, type MinGeocodingResponse } from '@/interfaces';
+
+type TGetLocationIdByCoordinates =
+  | [string, null]
+  | [null, any];
 
 export const getLocations = async (location: string): Promise<MinGeocodingClientResponse[]> => {
 
@@ -19,5 +23,30 @@ export const getLocations = async (location: string): Promise<MinGeocodingClient
   }));
 
   return newLocations;
+
+};
+
+export const getLocationIdByCoordinates = async (lat: number, lon: number): Promise<TGetLocationIdByCoordinates> => {
+
+  try {
+
+    if (!lat || !lon) throw new Error('Parameters "lat" or "lon" were not passed correctly.');
+
+    const params = {
+      location: `${lon},${lat}`
+    };
+
+    const { data } = await horusAPI.get<MinGeocodingResponse[]>('/geocoding', { params });
+
+    if (data.length < 1) throw new Error('No location related to the coordinates has been found.');
+
+    return [data[0].id, null];
+
+  } catch (error) {
+
+    console.error(error);
+    return [null, error];
+
+  };
 
 };
