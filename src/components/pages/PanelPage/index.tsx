@@ -1,13 +1,13 @@
 import { type FC } from 'react';
 
 import { type GenericCardProps } from '@/components/ui/GenericCard/types';
-import { BrightnessHighFill, DropletFill, Speedometer, SunsetFill, ThermometerHalf, UmbrellaFill } from '@/icons';
+import { DropletFill, Speedometer, SunsetFill, ThermometerHalf, UmbrellaFill } from '@/icons';
 import { type WeatherIconId, type MinWeatherResponse } from '@/interfaces';
-import { BackgroundImage, ForecastBar, ForecastCard, GenericCard, MapCard, WeatherIcon } from '@/ui';
+import { BackgroundImage, ForecastBar, ForecastCard, GenericCard, MapCard, UVIndexCard, WeatherIcon } from '@/ui';
 
 import type * as T from './types';
 
-const PanelPage: FC<T.PanelPageProps> = ({ lat, lon, weather }) => {
+const PanelPage: FC<T.PanelPageProps> = ({ locationName, lat, lon, weather }) => {
 
   const getCardsInfo = (weather: MinWeatherResponse): GenericCardProps[] => {
 
@@ -15,18 +15,14 @@ const PanelPage: FC<T.PanelPageProps> = ({ lat, lon, weather }) => {
       size: 16
     };
 
+    const sunrise = weather.current.nextEvent === 'sunrise';
+
     return [
       {
-        headIcon:    <BrightnessHighFill {...commonHeadIconProps} />,
-        title:       'UV index',
-        mainData:    String(weather.current.uvi),
-        description: '1'
-      },
-      {
         headIcon:    <SunsetFill {...commonHeadIconProps} />,
-        title:       'Sunset',
-        mainData:    String(weather.current.sunset),
-        description: `Amanecer: ${weather.current.sunrise}`
+        title:       sunrise ? 'Sunrise' : 'Sunset',
+        mainData:    sunrise ? weather.current.sunrise : weather.current.sunset,
+        description: sunrise ? `Atardecer: ${weather.current.sunset}` : `Amanecer: ${weather.current.sunrise}`
       },
       {
         headIcon:    <UmbrellaFill {...commonHeadIconProps} />,
@@ -62,7 +58,7 @@ const PanelPage: FC<T.PanelPageProps> = ({ lat, lon, weather }) => {
         <div className="min-h-screen p-8">
           <div className="flex flex-col text-white gap-8 justify-end h-full">
             <h1 className="text-7xl font-bold">{`${weather.current.temp}°C`}</h1>
-            <h3 className="text-3xl font-bold">Montevideo, Uruguay</h3>
+            <h3 className="text-3xl font-bold">{locationName}</h3>
             <div className="flex gap-4">
               <WeatherIcon
                 iconId={weather.current.iconId as WeatherIconId}
@@ -77,6 +73,10 @@ const PanelPage: FC<T.PanelPageProps> = ({ lat, lon, weather }) => {
           <div className='col-start-1 col-end-4'>
             <ForecastCard data={weather?.daily} />
           </div>
+          <UVIndexCard
+            uvIndex={weather.current.uvi}
+            description="Promedio"
+          />
           {
             getCardsInfo(weather).map((value, key) => (
               <GenericCard
