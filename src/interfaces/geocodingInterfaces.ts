@@ -1,4 +1,4 @@
-export interface MapboxGeocodingV5Response {
+export interface MapboxGeocodingSearchEnpointV5Response {
   type:        string;
   query:       string[];
   features:    Feature[];
@@ -37,6 +37,17 @@ export interface Properties {
   wikidata?: string;
 }
 
+export interface MapboxGeocodingV5SearchEnpointQueryParams {
+  autocomplete?: boolean;
+  bbox?: [number, number, number, number];
+  proximity?: { longitude: number; latitude: number };
+  language?: string[];
+  types?: string;
+  limit?: number;
+  country?: string[];
+  routing?: boolean;
+}
+
 export interface MinGeocodingResponse {
   id: string;
   lat: number;
@@ -48,6 +59,7 @@ export interface MinGeocodingClientResponse extends Omit<MinGeocodingResponse, '
   label: string;
   tempId: number;
   type: MinGeocodingResponseType;
+  value: string;
 }
 
 export enum MinGeocodingResponseType {
