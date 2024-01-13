@@ -32,22 +32,17 @@ export const getCurrentWeatherByCoordinates = async (lat: number, lon: number): 
         dewPoint:      current.dew_point,
         humidity:      current.humidity,
         iconId:        current.weather[0].icon,
+        nextEvent:     formatters.getNextEvent(current.dt, current.sunrise, current.sunset),
         precipitation: current?.rain?.['1h'] ?? 0,
         pressure:      current.pressure,
         sunrise:       formatters.formatTime(current.sunrise, timezone).hhmm,
         sunset:        formatters.formatTime(current.sunset, timezone).hhmm,
         temp:          Math.round(current.temp),
         uvi:           current.uvi,
-        nextEvent:     formatters.getNextEvent(current.dt, current.sunrise, current.sunset)
+        visibility:    formatters.metersToKilometers(current.visibility)
       },
-      hourly: formatters.insertSunsetAndSunrise(hourly, timezone, current.sunrise, current.sunset),
-      daily:  daily.map(({ temp, weather, dt }) => ({
-        dayName: formatters.getDayNames(dt),
-        dayTemp: Math.round(temp.day),
-        iconId:  weather[0].icon,
-        maxTemp: Math.round(temp.max),
-        minTemp: Math.round(temp.min)
-      }))
+      hourly: formatters.formatHourlyForecast(hourly, timezone, current.sunrise, current.sunset),
+      daily:  formatters.formatWeeklyForecast(daily, timezone)
     };
 
     return [formattedData, null];
