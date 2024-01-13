@@ -1,7 +1,7 @@
 import { type FC } from 'react';
 
 import { type GenericCardProps } from '@/components/ui/GenericCard/types';
-import { DropletFill, Speedometer, SunsetFill, ThermometerHalf, UmbrellaFill } from '@/icons';
+import { DropletFill, EyeFill, Speedometer, SunsetFill, UmbrellaFill } from '@/icons';
 import { type WeatherIconId, type MinWeatherResponse } from '@/interfaces';
 import { BackgroundImage, ForecastBar, ForecastCard, GenericCard, MapCard, UVIndexCard, WeatherIcon } from '@/ui';
 
@@ -21,32 +21,36 @@ const PanelPage: FC<T.PanelPageProps> = ({ locationName, lat, lon, weather }) =>
       {
         headIcon:    <SunsetFill {...commonHeadIconProps} />,
         title:       sunrise ? 'Sunrise' : 'Sunset',
-        mainData:    sunrise ? weather.current.sunrise : weather.current.sunset,
-        description: sunrise ? `Atardecer: ${weather.current.sunset}` : `Amanecer: ${weather.current.sunrise}`
+        value:       sunrise ? weather.current.sunrise : weather.current.sunset,
+        description: sunrise ? `Sunset: ${weather.current.sunset}` : `Sunrise: ${weather.current.sunrise}`
       },
       {
         headIcon:    <UmbrellaFill {...commonHeadIconProps} />,
         title:       'Precipitation',
-        mainData:    `${weather.current.precipitation}mm`,
-        description: 'Predicción de la última hora'
-      },
-      {
-        headIcon:    <ThermometerHalf {...commonHeadIconProps} />,
-        title:       'Temperature',
-        mainData:    `${weather.current.temp}°C`,
-        description: 'Se siente mas fresco con el viento'
-      },
-      {
-        headIcon:    <DropletFill {...commonHeadIconProps} />,
-        title:       'Humidity',
-        mainData:    `${weather.current.humidity}%`,
-        description: `El punto de rocío ahora es ${weather.current.dewPoint}°`
+        value:       `${weather.current.precipitation}`,
+        unit:        'mm',
+        description: 'Last hour forecast'
       },
       {
         headIcon:    <Speedometer {...commonHeadIconProps} />,
         title:       'Pressure',
-        mainData:    String(weather.current.pressure),
-        description: 'XD'
+        value:       String(weather.current.pressure),
+        unit:        'hPa',
+        description: 'High for clear skies, low for storms'
+      },
+      {
+        headIcon:    <DropletFill {...commonHeadIconProps} />,
+        title:       'Humidity',
+        value:       `${weather.current.humidity}`,
+        unit:        '%',
+        description: `The dew point is now ${weather.current.dewPoint}°`
+      },
+      {
+        headIcon:    <EyeFill {...commonHeadIconProps} />,
+        title:       'Visibility',
+        value:       `${weather.current.visibility}`,
+        unit:        'km',
+        description: 'Average visibility'
       }
     ];
 
@@ -75,7 +79,7 @@ const PanelPage: FC<T.PanelPageProps> = ({ locationName, lat, lon, weather }) =>
           </div>
           <UVIndexCard
             uvIndex={weather.current.uvi}
-            description="Promedio"
+            description="Average"
           />
           {
             getCardsInfo(weather).map((value, key) => (

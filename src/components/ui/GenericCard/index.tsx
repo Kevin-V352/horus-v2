@@ -4,7 +4,7 @@ import { Card } from '@/ui';
 
 import type * as T from './types';
 
-const GenericCard: FC<T.GenericCardProps> = ({ title, headIcon, mainData, description }) => {
+const GenericCard: FC<T.GenericCardProps> = ({ title, headIcon, value, unit, description }) => {
 
   return (
     <Card
@@ -12,7 +12,12 @@ const GenericCard: FC<T.GenericCardProps> = ({ title, headIcon, mainData, descri
       headIcon={headIcon}
     >
       <div className="flex flex-col justify-between text-center text-white" style={{ minHeight: '140px' }}>
-        <h3 className="text-5xl">{mainData}</h3>
+        <div className="flex flex-row justify-center items-end">
+          <h3 className="text-5xl">{value}</h3>
+          {
+            unit && (<span className="text-xl">{unit}</span>)
+          }
+        </div>
         <p>{description}</p>
       </div>
     </Card>
