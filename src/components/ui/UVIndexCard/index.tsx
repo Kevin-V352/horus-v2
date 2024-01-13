@@ -10,7 +10,9 @@ const UVIndexCard: FC<T.IUVIndexCardProps> = ({ uvIndex, description }) => {
 
   const calcCursorPosition = (uvIndex: number): CSSProperties => {
 
-    const xPercentage = ((uvIndex * 100) / 11);
+    const maxUvIndex = 11;
+    const formattedUvIndex = (uvIndex > maxUvIndex) ? maxUvIndex : uvIndex;
+    const xPercentage = ((formattedUvIndex * 100) / maxUvIndex);
 
     return {
       top:       '50%',
