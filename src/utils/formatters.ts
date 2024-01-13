@@ -1,4 +1,6 @@
-import { type MinHourlyWeater, type Current } from '@/interfaces';
+import momentTimeZone from 'moment-timezone';
+
+import { type MinHourlyWeater, type Current, type Daily, type MinDailyWeater } from '@/interfaces';
 
 interface IFormatTimeResponse {
   hh:   string;
@@ -8,16 +10,9 @@ interface IFormatTimeResponse {
 
 export const formatTime = (unixSeconds: number, timeZone: string): IFormatTimeResponse => {
 
-  const date = new Date((unixSeconds * 1000));
-  const formatter = new Intl.DateTimeFormat('en-US', {
-    timeZone,
-    hour:   '2-digit',
-    minute: '2-digit',
-    hour12: false
-  });
-
-  const formatted = formatter.format(date);
-  const [hours, minutes] = formatted.split(':');
+  const date = momentTimeZone.unix(unixSeconds).tz(timeZone);
+  const hours = date.format('HH');
+  const minutes = date.format('mm');
 
   return {
     hh:   hours,
@@ -27,7 +22,7 @@ export const formatTime = (unixSeconds: number, timeZone: string): IFormatTimeRe
 
 };
 
-export const insertSunsetAndSunrise = (hours: Current[], timeZone: string, sunrise: number, sunset: number): MinHourlyWeater[] => {
+export const formatHourlyForecast = (hours: Current[], timeZone: string, sunrise: number, sunset: number): MinHourlyWeater[] => {
 
   const result: MinHourlyWeater[] = hours.slice(0, 24).map((hourItem) => ({
     iconId: hourItem.weather[0].icon,
@@ -76,23 +71,17 @@ export const insertSunsetAndSunrise = (hours: Current[], timeZone: string, sunri
 
 };
 
-export const getDayNames = (timestamp: number): string => {
+export const formatWeeklyForecast = (daily: Daily[], timeZone: string): MinDailyWeater[] => {
 
-  const dateToCompare = new Date((timestamp * 1000));
-  const currentDate = new Date();
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-
-  const isToday = currentDate.toDateString() === dateToCompare.toDateString();
-  const isTomorrow = tomorrow.toDateString() === dateToCompare.toDateString();
-
-  if (isToday) return 'Today';
-  else if (isTomorrow) return 'Tomorrow';
-  else return new Date((timestamp * 1000)).toLocaleDateString('en-US', { weekday: 'long' });
+  return daily.map(({ temp, weather, dt }, index) => ({
+    dayName: (index === 0) ? 'Today' : (index === 1) ? 'Tomorrow' : momentTimeZone.unix(dt).tz(timeZone).format('dddd'),
+    dayTemp: Math.round(temp.day),
+    iconId:  weather[0].icon,
+    maxTemp: Math.round(temp.max),
+    minTemp: Math.round(temp.min)
+  }));
 
 };
-
-export const capitalize = (string: string): string => string[0].toUpperCase() + string.slice(1);
 
 export const getTempPercentage = (tempMin: number, tempMax: number, temp: number): number => {
 
@@ -112,15 +101,8 @@ export const getNextEvent = (currentUnix: number, sunriseUnix: number, sunsetUni
 
   if (currentUTC < sunriseUTC) {
 
-    if (currentUTC < sunsetUTC && sunsetUTC < sunriseUTC) {
-
-      return 'sunset';
-
-    } else {
-
-      return 'sunrise';
-
-    }
+    if (currentUTC < sunsetUTC && sunsetUTC < sunriseUTC) return 'sunset';
+    else return 'sunrise';
 
   } else if (currentUTC < sunsetUTC) {
 
@@ -128,10 +110,12 @@ export const getNextEvent = (currentUnix: number, sunriseUnix: number, sunsetUni
 
   } else {
 
-    // Aquí, tanto el amanecer como el atardecer ya ocurrieron,
-    // podrías calcular los eventos del día siguiente o manejarlo según sea necesario
     return 'sunrise';
 
-  }
+  };
 
 };
+
+export const metersToKilometers = (meters: number): number => (meters / 1000);
+
+export const capitalize = (string: string): string => string[0].toUpperCase() + string.slice(1);

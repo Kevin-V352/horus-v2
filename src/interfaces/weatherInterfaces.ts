@@ -121,13 +121,14 @@ export interface MinWeatherResponse {
     dewPoint:       number;
     humidity:       number;
     iconId:         string;
+    nextEvent:      'sunrise' | 'sunset';
     precipitation:  number;
     pressure:       number;
     sunrise:        string;
     sunset:         string;
     temp:           number;
     uvi:            number;
-    nextEvent:      'sunrise' | 'sunset';
+    visibility:     number;
   };
   hourly: MinHourlyWeater[];
   daily: MinDailyWeater[];
