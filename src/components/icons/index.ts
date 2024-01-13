@@ -10,6 +10,7 @@ export { default as CloudMoonFill } from './CloudMoonFill';
 export { default as CloudsFill } from './CloudsFill';
 export { default as CloudSnowFill } from './CloudSnowFill';
 export { default as DropletFill } from './DropletFill';
+export { default as EyeFill } from './EyeFill';
 export { default as FileEarmarkXFill } from './FileEarmarkXFill';
 export { default as MapFill } from './MapFill';
 export { default as MoonFill } from './MoonFill';
