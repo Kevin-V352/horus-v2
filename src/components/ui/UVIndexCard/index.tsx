@@ -27,7 +27,7 @@ const UVIndexCard: FC<T.IUVIndexCardProps> = ({ uvIndex, description }) => {
       title="UV index"
       headIcon={<BrightnessHighFill size={16}/>}
     >
-      <div className="flex flex-col justify-between text-center text-white" style={{ minHeight: '140px' }}>
+      <div className="flex flex-col justify-between text-center text-white" style={{ minHeight: '110px' }}>
         <h3 className="text-5xl">{uvIndex}</h3>
         <p>{description}</p>
         <div className={s.uvIndexBar}>
