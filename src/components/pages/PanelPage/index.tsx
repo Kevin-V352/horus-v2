@@ -58,8 +58,8 @@ const PanelPage: FC<T.PanelPageProps> = ({ locationName, lat, lon, weather }) =>
 
   return (
     <BackgroundImage backgroundId={weather.current.iconId as WeatherIconId}>
-      <div className="grid grid-cols-2">
-        <div className="min-h-screen p-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2">
+        <div className="p-4 md:p-8 lg:min-h-screen">
           <div className="flex flex-col text-white gap-8 justify-end h-full">
             <h1 className="text-7xl font-bold">{`${weather.current.temp}°C`}</h1>
             <h3 className="text-3xl font-bold">{locationName}</h3>
@@ -73,8 +73,8 @@ const PanelPage: FC<T.PanelPageProps> = ({ locationName, lat, lon, weather }) =>
             <ForecastBar data={weather.hourly} />
           </div>
         </div>
-        <div className="bg-black_transparent_03 min-h-screen p-8 grid gap-2.5 grid-cols-3 auto-rows-min h-screen overflow-y-scroll">
-          <div className='col-start-1 col-end-4'>
+        <div className="bg-black_transparent_03 min-h-screen p-4 md:p-8 grid gap-2.5 grid-cols-1 lg:grid-cols-3 auto-rows-min lg:h-screen lg:overflow-y-scroll">
+          <div className='lg:col-start-1 lg:col-end-4'>
             <ForecastCard data={weather?.daily} />
           </div>
           <UVIndexCard
@@ -89,7 +89,7 @@ const PanelPage: FC<T.PanelPageProps> = ({ locationName, lat, lon, weather }) =>
               />
             ))
           }
-          <div className='col-start-1 col-end-4'>
+          <div className='lg:col-start-1 lg:col-end-4'>
             <MapCard
               lat={lat}
               lon={lon}
