@@ -11,7 +11,7 @@ const GenericCard: FC<T.GenericCardProps> = ({ title, headIcon, value, unit, des
       title={title}
       headIcon={headIcon}
     >
-      <div className="flex flex-col justify-between text-center text-white" style={{ minHeight: '140px' }}>
+      <div className="flex flex-col justify-between text-center text-white" style={{ minHeight: '110px' }}>
         <div className="flex flex-row justify-center items-end">
           <h3 className="text-5xl">{value}</h3>
           {
