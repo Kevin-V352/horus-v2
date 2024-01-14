@@ -12,6 +12,7 @@
   cursor: pointer;
   color: #fff;
   transition: ease-in-out 300ms;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .accordionContent {
