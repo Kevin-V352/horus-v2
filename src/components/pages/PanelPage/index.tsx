@@ -1,7 +1,7 @@
 import { type FC } from 'react';
 
 import { type GenericCardProps } from '@/components/ui/GenericCard/types';
-import { DropletFill, EyeFill, Speedometer, SunsetFill, UmbrellaFill } from '@/icons';
+import { DropletFill, EyeFill, Speedometer, SunriseFill, SunsetFill, UmbrellaFill } from '@/icons';
 import { type WeatherIconId, type MinWeatherResponse } from '@/interfaces';
 import { BackgroundImage, ForecastBar, ForecastCard, GenericCard, MapCard, UVIndexCard, WeatherIcon } from '@/ui';
 
@@ -19,34 +19,34 @@ const PanelPage: FC<T.PanelPageProps> = ({ locationName, lat, lon, weather }) =>
 
     return [
       {
-        headIcon:    <SunsetFill {...commonHeadIconProps} />,
+        headIcon:    sunrise ? <SunriseFill {...commonHeadIconProps}/> : <SunsetFill {...commonHeadIconProps}/>,
         title:       sunrise ? 'Sunrise' : 'Sunset',
         value:       sunrise ? weather.current.sunrise : weather.current.sunset,
         description: sunrise ? `Sunset: ${weather.current.sunset}` : `Sunrise: ${weather.current.sunrise}`
       },
       {
-        headIcon:    <UmbrellaFill {...commonHeadIconProps} />,
+        headIcon:    <UmbrellaFill {...commonHeadIconProps}/>,
         title:       'Precipitation',
         value:       `${weather.current.precipitation}`,
         unit:        'mm',
         description: 'Last hour forecast'
       },
       {
-        headIcon:    <Speedometer {...commonHeadIconProps} />,
+        headIcon:    <Speedometer {...commonHeadIconProps}/>,
         title:       'Pressure',
         value:       String(weather.current.pressure),
         unit:        'hPa',
         description: 'High for clear skies, low for storms'
       },
       {
-        headIcon:    <DropletFill {...commonHeadIconProps} />,
+        headIcon:    <DropletFill {...commonHeadIconProps}/>,
         title:       'Humidity',
         value:       `${weather.current.humidity}`,
         unit:        '%',
         description: `The dew point is now ${weather.current.dewPoint}°`
       },
       {
-        headIcon:    <EyeFill {...commonHeadIconProps} />,
+        headIcon:    <EyeFill {...commonHeadIconProps}/>,
         title:       'Visibility',
         value:       `${weather.current.visibility}`,
         unit:        'km',
