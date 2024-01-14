@@ -36,10 +36,10 @@ const ForecastBar: FC<T.ForecastBarProps> = ({ data }) => {
         scrollbar: s.simpleBarScrollbar
       }}
     >
-      <div className="flex flex-row gap-6 cursor-ew-resize">
+      <div className="flex flex-row gap-4 md:gap-6 cursor-ew-resize">
         {
           data.map(({ hour, iconId, temp, type }, index) => (
-            <div key={index} className="flex flex-col items-center gap-5 text-xl">
+            <div key={index} className="flex flex-col items-center gap-3 md:gap-5 text-base md:text-xl">
               <span>{hour}</span>
               <WeatherIcon iconId={iconId as WeatherIconId} size={35} />
               <span>
