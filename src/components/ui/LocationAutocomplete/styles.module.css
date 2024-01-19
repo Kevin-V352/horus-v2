@@ -1,0 +1,19 @@
+.reactSelectControl {
+  @apply !border-white !border-2 !rounded-xl !py-1 !bg-transparent !shadow-none;
+}
+
+.reactSelectText {
+  @apply !text-white;
+}
+
+.reactSelectMenu {
+  @apply !bg-black_transparent_05 !rounded-xl py-2;
+}
+
+.reactSelectOption {
+  @apply !text-white;
+}
+
+.reactSelectOptionHovered {
+  @apply !text-black !bg-white;
+}
