@@ -1,28 +1,41 @@
 import { horusAPI } from '@/config';
 import { type MinGeocodingClientResponse, MinGeocodingResponseType, type MinGeocodingResponse } from '@/interfaces';
 
+type TGetLocations =
+  | [MinGeocodingClientResponse[], null]
+  | [null, any];
+
 type TGetLocationIdByCoordinates =
   | [string, null]
   | [null, any];
 
-export const getLocations = async (location: string): Promise<MinGeocodingClientResponse[]> => {
+export const getLocations = async (location: string): Promise<TGetLocations> => {
 
-  const { data } = await horusAPI.get<MinGeocodingResponse[]>('/geocoding', {
-    params: {
-      location
-    }
-  });
+  try {
 
-  const newLocations: MinGeocodingClientResponse[] = data.map(({ lat, lon, locationName, id }, index) => ({
-    lat,
-    lon,
-    tempId: (Date.now() + index),
-    type:   MinGeocodingResponseType.newItem,
-    label:  locationName,
-    value:  id
-  }));
+    const { data } = await horusAPI.get<MinGeocodingResponse[]>('/geocoding', {
+      params: {
+        location
+      }
+    });
 
-  return newLocations;
+    const newLocations: MinGeocodingClientResponse[] = data.map(({ lat, lon, locationName, id }, index) => ({
+      lat,
+      lon,
+      tempId: (Date.now() + index),
+      type:   MinGeocodingResponseType.newItem,
+      label:  locationName,
+      value:  id
+    }));
+
+    return [newLocations, null];
+
+  } catch (error) {
+
+    console.error(error);
+    return [null, error];
+
+  };
 
 };
 

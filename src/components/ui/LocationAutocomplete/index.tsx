@@ -2,6 +2,7 @@
 
 import { useEffect, type FC, useState } from 'react';
 
+import debounce from 'debounce-promise';
 import { type OptionProps, components } from 'react-select';
 import AsyncSelect from 'react-select/async';
 
@@ -43,12 +44,23 @@ const LocationAutocomplete: FC<T.LocationAutocompleteProps> = ({ onChange }) => 
 
   }, []);
 
+  const loadLocations = debounce(async (inputValue: string) => {
+
+    if (!inputValue || inputValue.trim() === '') return [];
+
+    const [newLocations] = await locationServices.getLocations(inputValue);
+
+    if (!newLocations) return [];
+    else return newLocations;
+
+  }, 1000);
+
   return (
     <AsyncSelect
       cacheOptions
       onChange={onChange}
       defaultOptions={prevLocationsHistory}
-      loadOptions={locationServices.getLocations}
+      loadOptions={loadLocations}
       components={{ Option: CustomOption as any }}
     />
   );
