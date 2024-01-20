@@ -1,0 +1,19 @@
+.reactMenu {
+  @apply bg-carbon;
+}
+
+.reactMenuHeader {
+  @apply text-gray-400;
+}
+
+.reactMenuItem {
+  @apply text-white;
+}
+
+.reactMenuItemHover {
+  @apply bg-white text-carbon;
+}
+
+.reactMenuItemDisable {
+  @apply text-gray-400
+}

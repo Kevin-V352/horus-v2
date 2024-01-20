@@ -9,6 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        carbon:               '#1F1F1F',
         black_transparent_03: 'rgba(0, 0, 0, 0.3)',
         black_transparent_05: 'rgba(0, 0, 0, 0.5)',
         cyan:                 '#92E5BD',
