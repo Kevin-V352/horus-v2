@@ -3,7 +3,7 @@ import { type FC } from 'react';
 import { type GenericCardProps } from '@/components/ui/GenericCard/types';
 import { DropletFill, EyeFill, Speedometer, SunriseFill, SunsetFill, UmbrellaFill } from '@/icons';
 import { type WeatherIconId, type MinWeatherResponse } from '@/interfaces';
-import { BackgroundImage, ForecastBar, ForecastCard, GenericCard, MapCard, UVIndexCard, WeatherIcon } from '@/ui';
+import { BackgroundImage, UserDropdownMenu, ForecastBar, ForecastCard, GenericCard, MapCard, UVIndexCard, WeatherIcon, SaveLocationIndicator } from '@/ui';
 
 import type * as T from './types';
 
@@ -61,6 +61,14 @@ const PanelPage: FC<T.PanelPageProps> = ({ locationName, lat, lon, weather }) =>
       <div className="grid grid-cols-1 lg:grid-cols-2">
         <div className="p-4 md:p-8 lg:min-h-screen">
           <div className="flex flex-col text-white gap-8 justify-end h-full">
+            <div className="flex-1">
+              <div className="flex items-center gap-2">
+                <h1>HORUS</h1>
+                <div className="flex-1"/>
+                <SaveLocationIndicator/>
+                <UserDropdownMenu/>
+              </div>
+            </div>
             <h1 className="text-5xl md:text-7xl font-bold">{`${weather.current.temp}°C`}</h1>
             <h3 className="text-2xl md:text-3xl font-bold">{locationName}</h3>
             <div className="flex gap-4">

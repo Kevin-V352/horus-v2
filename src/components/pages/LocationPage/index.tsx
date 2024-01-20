@@ -61,21 +61,26 @@ const LocationPage: FC = () => {
 
   return (
     <BackgroundImage backgroundId="01d">
-      <div className="min-h-screen p-4 flex flex-col gap-3 bg-black_transparent_03">
-        <h1 className="text-4xl text-center font-bold text-white mb-6">Explore Weather with a Click</h1>
-        <LocationAutocomplete onChange={onLocationChange}/>
-        <div className="flex items-center my-3">
-          <div className="flex-1 bg-white h-px"/>
-          <span className="text-white mx-2 text-base">or</span>
-          <div className="flex-1 bg-white h-px"/>
-        </div>
-        <Button
-          onClick={onCurrentUserLocation}
-          disabled={!currentLocationId}
-          loading={!currentLocationId}
-        >
-          Use my current location
-        </Button>
+      <div className="min-h-screen p-4 flex flex-col gap-8 bg-black_transparent_03">
+        <h1 className="text-4xl text-center font-bold text-white">Explore Weather with a Click</h1>
+        <section className="flex flex-col gap-4">
+          <LocationAutocomplete onChange={onLocationChange}/>
+          <div className="flex items-center">
+            <div className="flex-1 bg-white h-px"/>
+            <span className="text-white mx-2 text-base">or</span>
+            <div className="flex-1 bg-white h-px"/>
+          </div>
+          <Button
+            onClick={onCurrentUserLocation}
+            disabled={!currentLocationId}
+            loading={!currentLocationId}
+          >
+            Use my current location
+          </Button>
+        </section>
+        <section>
+          <h3 className="text-white text-center text-xl font-bold">My favorite locations</h3>
+        </section>
       </div>
     </BackgroundImage>
   );

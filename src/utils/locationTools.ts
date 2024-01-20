@@ -1,7 +1,11 @@
-import { type MinGeocodingClientResponse, MinGeocodingResponseType } from '@/interfaces';
+import { type MinGeocodingClientResponse, MinGeocodingResponseType, type FavoriteLocation } from '@/interfaces';
 
 type TGetUserLocationResponse =
   | [GeolocationCoordinates, null]
+  | [null, any];
+
+type TGetFavoriteLocationsFromLocalStorage =
+  | [FavoriteLocation[], null]
   | [null, any];
 
 const userLocationHistoryKey = 'userLocationHistory';
@@ -96,5 +100,79 @@ export const getLocationFromLocalHistory = (): MinGeocodingClientResponse[] => {
 
   if (userLocationHistoryFromLocalStorage) return JSON.parse(userLocationHistoryFromLocalStorage);
   else return [];
+
+};
+
+export const getFavoriteLocationsFromLocalStorage = (): TGetFavoriteLocationsFromLocalStorage => {
+
+  try {
+
+    let parsedItems: FavoriteLocation[] = [];
+    const favoriteLocations = localStorage.getItem('favoriteLocations');
+
+    if (favoriteLocations) parsedItems = JSON.parse(favoriteLocations);
+
+    return [parsedItems, null];
+
+  } catch (error) {
+
+    console.error(error);
+    return [null, error];
+
+  };
+
+};
+
+export const saveFavoriteLocationsInLocalStorage = (label: string, locationId: string): boolean => {
+
+  const [savedFavoriteLocations] = getFavoriteLocationsFromLocalStorage();
+
+  let previousFavoriteLocations: FavoriteLocation[] = [];
+
+  if (savedFavoriteLocations) previousFavoriteLocations = savedFavoriteLocations;
+
+  try {
+
+    const locationIndex = previousFavoriteLocations.findIndex((favoriteLocation) => favoriteLocation.locationId === locationId);
+    if (locationIndex !== -1) return true;
+
+    localStorage.setItem('favoriteLocations', JSON.stringify([...previousFavoriteLocations, { label, locationId }]));
+
+    return true;
+
+  } catch (error) {
+
+    console.error(error);
+    return false;
+
+  };
+
+};
+
+export const deleteFavoriteLocationFromLocalStorage = (locationId: string): boolean => {
+
+  const [savedFavoriteLocations] = getFavoriteLocationsFromLocalStorage();
+
+  let previousFavoriteLocations: FavoriteLocation[] = [];
+
+  if (savedFavoriteLocations) previousFavoriteLocations = savedFavoriteLocations;
+  else return true;
+
+  try {
+
+    const locationIndex = previousFavoriteLocations.findIndex((favoriteLocation) => favoriteLocation.locationId === locationId);
+    if (locationIndex === -1) return true;
+
+    previousFavoriteLocations.splice(locationIndex, 1);
+    localStorage.setItem('favoriteLocations', JSON.stringify(previousFavoriteLocations));
+
+    return true;
+
+  } catch (error) {
+
+    console.error(error);
+    return false;
+
+  };
 
 };
