@@ -7,7 +7,7 @@
 }
 
 .reactSelectMenu {
-  @apply !bg-black_transparent_05 !rounded-xl py-2;
+  @apply !bg-carbon !rounded-xl py-2;
 }
 
 .reactSelectOption {
