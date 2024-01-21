@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 
+import { useSearchParams } from 'next/navigation';
+
 import { type FavoriteLocation } from '@/interfaces';
 import { locationTools } from '@/utils';
 
@@ -21,11 +23,13 @@ const useSaveFavoriteLocation = (label: string, locationId: string): IHookRespon
     locationSaved: false
   });
 
+  const searchParams = useSearchParams().get('locationId');
+
   useEffect(() => {
 
     init();
 
-  }, []);
+  }, [searchParams]);
 
   const saveFavoriteLocation = (): void => {
 
@@ -77,7 +81,7 @@ const useSaveFavoriteLocation = (label: string, locationId: string): IHookRespon
 
     const locationIndex = previousFavoriteLocations.findIndex((favoriteLocation) => favoriteLocation.locationId === locationId);
 
-    if (locationIndex !== -1) setState({ isLoading: false, locationSaved: true });
+    setState({ isLoading: false, locationSaved: (locationIndex !== -1) });
 
   };
 

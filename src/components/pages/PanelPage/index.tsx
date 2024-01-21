@@ -7,7 +7,7 @@ import { BackgroundImage, UserDropdownMenu, ForecastBar, ForecastCard, GenericCa
 
 import type * as T from './types';
 
-const PanelPage: FC<T.PanelPageProps> = ({ locationName, lat, lon, weather }) => {
+const PanelPage: FC<T.PanelPageProps> = ({ locationName, locationId, lat, lon, weather }) => {
 
   const getCardsInfo = (weather: MinWeatherResponse): GenericCardProps[] => {
 
@@ -65,7 +65,10 @@ const PanelPage: FC<T.PanelPageProps> = ({ locationName, lat, lon, weather }) =>
               <div className="flex items-center gap-2">
                 <h1>HORUS</h1>
                 <div className="flex-1"/>
-                <SaveLocationIndicator/>
+                <SaveLocationIndicator
+                  label={locationName}
+                  locationId={locationId}
+                />
                 <UserDropdownMenu/>
               </div>
             </div>

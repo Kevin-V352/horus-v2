@@ -5,14 +5,16 @@ import { type FC } from 'react';
 import { useSaveFavoriteLocation } from '@/hooks';
 import { Compass, CompassFill } from '@/icons';
 
-const SaveLocationIndicator: FC = () => {
+import type * as T from './types';
+
+const SaveLocationIndicator: FC<T.ISaveLocationIndicatorProps> = ({ label, locationId }) => {
 
   const {
     isLoading,
     locationSaved,
     saveFavoriteLocation,
     removeFavoriteLocation
-  } = useSaveFavoriteLocation('Berlin', 'place.115770');
+  } = useSaveFavoriteLocation(label, locationId);
 
   const userToggle = (): void => {
 

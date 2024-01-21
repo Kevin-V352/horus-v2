@@ -27,6 +27,7 @@ const Home: FC<{ params: { slug: string }; searchParams: Record<string, string |
   return (
     <PanelPage
       locationName={locationName}
+      locationId={locationId}
       lat={Number(lat)}
       lon={Number(lon)}
       weather={weather}

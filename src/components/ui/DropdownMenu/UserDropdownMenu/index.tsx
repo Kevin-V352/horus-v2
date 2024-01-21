@@ -15,8 +15,6 @@ const UserDropdownMenu: FC = () => {
 
   const router = useRouter();
 
-  console.log(locationTools.getLocationFromLocalHistory());
-
   const favoriteLocations = locationTools.getLocationFromLocalHistory();
 
   const profileMenuOptions: T.IGroupOptions[] = [
