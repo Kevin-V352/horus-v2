@@ -23,7 +23,7 @@ export const GET = async (req: NextRequest): Promise<Response> => {
       message: invalidType
         ? `The ${type} value is invalid. The type must correspond to "LayerTypes".`
         : `The ${testArr[invalidCoordinate]} value is invalid. Coordinates must be numeric values.`
-    }), { status: 200 });
+    }), { status: 400 });
 
   };
 

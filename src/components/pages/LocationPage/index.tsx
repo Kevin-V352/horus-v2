@@ -6,8 +6,9 @@ import { useRouter } from 'next/navigation';
 import { type SingleValue } from 'react-select';
 
 import { locationServices } from '@/clientServices';
+import { CompassFill } from '@/components/icons';
 import { type MinGeocodingClientResponse } from '@/interfaces';
-import { BackgroundImage, Button, LocationAutocomplete } from '@/ui';
+import { BackgroundImage, Button, Card, LocationAutocomplete } from '@/ui';
 import { locationTools } from '@/utils';
 
 const LocationPage: FC = () => {
@@ -59,6 +60,9 @@ const LocationPage: FC = () => {
 
   };
 
+  const [favoriteLocations] = locationTools.getFavoriteLocationsFromLocalStorage();
+  const parsedFavoriteLocations = favoriteLocations ?? [];
+
   return (
     <BackgroundImage backgroundId="01d">
       <div className="min-h-screen p-4 flex flex-col gap-8 bg-black_transparent_03">
@@ -78,8 +82,25 @@ const LocationPage: FC = () => {
             Use my current location
           </Button>
         </section>
-        <section>
+        <section className="flex flex-col gap-4">
           <h3 className="text-white text-center text-xl font-bold">My favorite locations</h3>
+          <div className="grid grid-cols-2 gap-2.5">
+            {
+              parsedFavoriteLocations.map(({ locationName }, index) => (
+                <Card
+                  key={index}
+                  headIcon={<CompassFill/>}
+                  onClose={() => {
+
+                    console.log('AAA');
+
+                  }}
+                >
+                  <h3 className="text-white truncate text-ellipsis">{locationName}</h3>
+                </Card>
+              ))
+            }
+          </div>
         </section>
       </div>
     </BackgroundImage>

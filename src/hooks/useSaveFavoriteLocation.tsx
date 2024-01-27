@@ -16,7 +16,7 @@ interface IHookResponse extends IHookState {
   removeFavoriteLocation: () => void;
 };
 
-const useSaveFavoriteLocation = (label: string, locationId: string): IHookResponse => {
+const useSaveFavoriteLocation = (newFavoriteLocation: FavoriteLocation): IHookResponse => {
 
   const [state, setState] = useState<IHookState>({
     isLoading:     false,
@@ -35,7 +35,7 @@ const useSaveFavoriteLocation = (label: string, locationId: string): IHookRespon
 
     setState((prevState) => ({ ...prevState, isLoading: true }));
 
-    const successfullySave = locationTools.saveFavoriteLocationsInLocalStorage(label, locationId);
+    const successfullySave = locationTools.saveFavoriteLocationsInLocalStorage(newFavoriteLocation);
 
     if (successfullySave) {
 
@@ -55,7 +55,7 @@ const useSaveFavoriteLocation = (label: string, locationId: string): IHookRespon
 
     setState((prevState) => ({ ...prevState, isLoading: true }));
 
-    const successfullyRemove = locationTools.deleteFavoriteLocationFromLocalStorage(locationId);
+    const successfullyRemove = locationTools.deleteFavoriteLocationFromLocalStorage(newFavoriteLocation.id);
 
     if (successfullyRemove) {
 
@@ -79,7 +79,7 @@ const useSaveFavoriteLocation = (label: string, locationId: string): IHookRespon
 
     if (savedFavoriteLocations) previousFavoriteLocations = savedFavoriteLocations;
 
-    const locationIndex = previousFavoriteLocations.findIndex((favoriteLocation) => favoriteLocation.locationId === locationId);
+    const locationIndex = previousFavoriteLocations.findIndex((favoriteLocation) => favoriteLocation.id === newFavoriteLocation.id);
 
     setState({ isLoading: false, locationSaved: (locationIndex !== -1) });
 

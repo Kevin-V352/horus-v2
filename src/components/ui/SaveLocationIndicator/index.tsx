@@ -7,14 +7,14 @@ import { Compass, CompassFill } from '@/icons';
 
 import type * as T from './types';
 
-const SaveLocationIndicator: FC<T.ISaveLocationIndicatorProps> = ({ label, locationId }) => {
+const SaveLocationIndicator: FC<T.ISaveLocationIndicatorProps> = ({ newFavoriteLocation }) => {
 
   const {
     isLoading,
     locationSaved,
     saveFavoriteLocation,
     removeFavoriteLocation
-  } = useSaveFavoriteLocation(label, locationId);
+  } = useSaveFavoriteLocation(newFavoriteLocation);
 
   const userToggle = (): void => {
 

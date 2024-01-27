@@ -2,12 +2,19 @@ import { type FC } from 'react';
 
 import { type GenericCardProps } from '@/components/ui/GenericCard/types';
 import { DropletFill, EyeFill, Speedometer, SunriseFill, SunsetFill, UmbrellaFill } from '@/icons';
-import { type WeatherIconId, type MinWeatherResponse } from '@/interfaces';
+import { type WeatherIconId, type MinWeatherResponse, type FavoriteLocation } from '@/interfaces';
 import { BackgroundImage, UserDropdownMenu, ForecastBar, ForecastCard, GenericCard, MapCard, UVIndexCard, WeatherIcon, SaveLocationIndicator } from '@/ui';
 
 import type * as T from './types';
 
 const PanelPage: FC<T.PanelPageProps> = ({ locationName, locationId, lat, lon, weather }) => {
+
+  const newFavoriteLocation: FavoriteLocation = {
+    id: locationId,
+    locationName,
+    lat,
+    lon
+  };
 
   const getCardsInfo = (weather: MinWeatherResponse): GenericCardProps[] => {
 
@@ -65,10 +72,7 @@ const PanelPage: FC<T.PanelPageProps> = ({ locationName, locationId, lat, lon, w
               <div className="flex items-center gap-2">
                 <h1>HORUS</h1>
                 <div className="flex-1"/>
-                <SaveLocationIndicator
-                  label={locationName}
-                  locationId={locationId}
-                />
+                <SaveLocationIndicator newFavoriteLocation={newFavoriteLocation}/>
                 <UserDropdownMenu/>
               </div>
             </div>

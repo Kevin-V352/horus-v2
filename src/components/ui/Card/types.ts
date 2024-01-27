@@ -2,6 +2,7 @@ import { type ReactNode } from 'react';
 
 export interface CardProps {
   children:   ReactNode;
-  headIcon:   ReactNode;
-  title:      string;
+  headIcon?:  ReactNode;
+  title?:     string;
+  onClose?:   () => void;
 };

@@ -22,3 +22,4 @@ export { default as SunriseFill } from './SunriseFill';
 export { default as SunsetFill } from './SunsetFill';
 export { default as ThermometerHalf } from './ThermometerHalf';
 export { default as UmbrellaFill } from './UmbrellaFill';
+export { default as XCircleFill } from './XCircleFill';

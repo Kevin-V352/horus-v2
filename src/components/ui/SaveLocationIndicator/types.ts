@@ -1,3 +1,5 @@
 import { type FavoriteLocation } from '@/interfaces';
 
-export interface ISaveLocationIndicatorProps extends FavoriteLocation {}
+export interface ISaveLocationIndicatorProps {
+  newFavoriteLocation: FavoriteLocation;
+}

@@ -1,2 +1,2 @@
-export * as formatters from './formatters';
-export * as locationTools from './locationTools';
+export * from './classes';
+export * from './functions';

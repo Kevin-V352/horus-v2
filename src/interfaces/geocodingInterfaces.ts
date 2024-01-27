@@ -67,7 +67,4 @@ export enum MinGeocodingResponseType {
   newItem = 'newItem'
 }
 
-export interface FavoriteLocation {
-  label: string;
-  locationId: string;
-}
+export interface FavoriteLocation extends MinGeocodingResponse {}

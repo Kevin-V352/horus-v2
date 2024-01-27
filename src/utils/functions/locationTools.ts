@@ -123,7 +123,7 @@ export const getFavoriteLocationsFromLocalStorage = (): TGetFavoriteLocationsFro
 
 };
 
-export const saveFavoriteLocationsInLocalStorage = (label: string, locationId: string): boolean => {
+export const saveFavoriteLocationsInLocalStorage = (newFavoriteLocation: FavoriteLocation): boolean => {
 
   const [savedFavoriteLocations] = getFavoriteLocationsFromLocalStorage();
 
@@ -133,10 +133,10 @@ export const saveFavoriteLocationsInLocalStorage = (label: string, locationId: s
 
   try {
 
-    const locationIndex = previousFavoriteLocations.findIndex((favoriteLocation) => favoriteLocation.locationId === locationId);
+    const locationIndex = previousFavoriteLocations.findIndex((favoriteLocation) => favoriteLocation.id === newFavoriteLocation.id);
     if (locationIndex !== -1) return true;
 
-    localStorage.setItem('favoriteLocations', JSON.stringify([...previousFavoriteLocations, { label, locationId }]));
+    localStorage.setItem('favoriteLocations', JSON.stringify([...previousFavoriteLocations, newFavoriteLocation]));
 
     return true;
 
@@ -149,7 +149,7 @@ export const saveFavoriteLocationsInLocalStorage = (label: string, locationId: s
 
 };
 
-export const deleteFavoriteLocationFromLocalStorage = (locationId: string): boolean => {
+export const deleteFavoriteLocationFromLocalStorage = (id: string): boolean => {
 
   const [savedFavoriteLocations] = getFavoriteLocationsFromLocalStorage();
 
@@ -160,7 +160,7 @@ export const deleteFavoriteLocationFromLocalStorage = (locationId: string): bool
 
   try {
 
-    const locationIndex = previousFavoriteLocations.findIndex((favoriteLocation) => favoriteLocation.locationId === locationId);
+    const locationIndex = previousFavoriteLocations.findIndex((favoriteLocation) => favoriteLocation.id === id);
     if (locationIndex === -1) return true;
 
     previousFavoriteLocations.splice(locationIndex, 1);
